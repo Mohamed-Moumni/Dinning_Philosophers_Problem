@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 14:26:44 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/21 12:54:06 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/22 13:52:17 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@ void	*simulation(void *philo_info)
 	t_philo	*tmp_philo;
 
 	tmp_philo = (t_philo *)philo_info;
-	tmp_philo->last_eat = tmp_philo->rule->current_time;
 	if (tmp_philo->philo_id & 1)
-		ft_usleep(tmp_philo->rule->time_to_eat / 2);
+		usleep(500);
 	while (1)
 	{
 		pthread_mutex_lock(&tmp_philo->rule->fork[(tmp_philo->philo_id - 1)]);
@@ -41,8 +40,8 @@ void	eating(t_philo *philo)
 		philo->rule->meals_count -= 1;
 	philo->meals -= 1;
 	print_state(philo, "is eating", 0);
-	ft_usleep(philo->rule->time_to_eat);
 	philo->last_eat = get_time_of_day();
+	ft_usleep(philo->rule->time_to_eat);
 }
 
 void	sleeping(t_philo *philo)

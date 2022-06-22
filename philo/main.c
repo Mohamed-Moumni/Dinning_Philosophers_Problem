@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 12:34:45 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/21 12:40:41 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/22 13:52:06 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	create_threads(t_philo *philo, t_philo_rule *rule)
 	rule->current_time = get_time_of_day();
 	while (i < philo->rule->n)
 	{
+		philo[i].last_eat = rule->current_time;
 		if (pthread_create(&philo[i].pth, NULL, simulation, &philo[i]))
 			return ;
 		pthread_detach(philo[i].pth);
@@ -74,8 +75,13 @@ void	create_threads(t_philo *philo, t_philo_rule *rule)
 			print_state(&philo[i], "is died\n", 1);
 			break ;
 		}
+		if (philo->rule->meals_count == 0)
+		{
+			print_state(philo, "All philosphers ate\n", 2);
+			break ;
+		}
 		i++;
-		if (i == (philo->rule->n - 1))
+		if (i == (philo->rule->n))
 			i = 0;
 		usleep(100);
 	}
@@ -123,6 +129,7 @@ int	main(int ac, char **av)
 		printf("Memory Allocation Error or Error in creation of thread\n");
 		return (0);
 	}
+	
 	pthread_mutex_init(&philo_list->rule->print_mutex, NULL);
 	create_threads(philo_list, rules);
 	// free_mutex(philo_list, rules->n);

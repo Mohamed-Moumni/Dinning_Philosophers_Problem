@@ -14,22 +14,22 @@
 
 void	*simulation(void *philo_info)
 {
-	t_philo	*tmp_philo;
+	t_philo	*phil;
 
-	tmp_philo = (t_philo *)philo_info;
-	if (tmp_philo->philo_id & 1)
+	phil = (t_philo *)philo_info;
+	if (phil->philo_id & 1)
 		usleep(500);
 	while (1)
 	{
-		pthread_mutex_lock(&tmp_philo->rule->fork[(tmp_philo->philo_id - 1)]);
-		print_state(tmp_philo, "has taken a fork", 0);
-		pthread_mutex_lock(&tmp_philo->rule->fork[(tmp_philo->philo_id) % tmp_philo->rule->n]);
-		print_state(tmp_philo, "has taken a fork", 0);
-		eating(tmp_philo);
-		pthread_mutex_unlock(&tmp_philo->rule->fork[(tmp_philo->philo_id) % tmp_philo->rule->n]);
-		pthread_mutex_unlock(&tmp_philo->rule->fork[(tmp_philo->philo_id - 1)]);
-		sleeping(tmp_philo);
-		print_state(tmp_philo, "is thinking", 0);
+		pthread_mutex_lock(&phil->rule->fork[phil->philo_id - 1]);
+		print_state(phil, "has taken a fork", 0);
+		pthread_mutex_lock(&phil->rule->fork[phil->philo_id % phil->rule->n]);
+		print_state(phil, "has taken a fork", 0);
+		eating(phil);
+		pthread_mutex_unlock(&phil->rule->fork[phil->philo_id % phil->rule->n]);
+		pthread_mutex_unlock(&phil->rule->fork[phil->philo_id - 1]);
+		sleeping(phil);
+		print_state(phil, "is thinking", 0);
 	}
 	return (NULL);
 }

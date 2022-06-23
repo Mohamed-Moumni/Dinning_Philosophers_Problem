@@ -68,18 +68,8 @@ void	create_threads(t_philo *philo, t_philo_rule *rule)
 	i = 0;
 	while (1)
 	{
-		if (get_time_of_day() - philo[i].last_eat >= philo[i].rule->time_to_die)
-		{
-			philo[i].rule->dead_time = get_time_of_day() - philo[i].rule->current_time;
-			philo[i].rule->philo_id = philo[i].philo_id;
-			print_state(&philo[i], "is died\n", 1);
+		if (check_time(&philo[i]))
 			break ;
-		}
-		if (philo->rule->meals_count == 0)
-		{
-			print_state(philo, "All philosphers ate\n", 2);
-			break ;
-		}
 		i++;
 		if (i == (philo->rule->n))
 			i = 0;
@@ -87,26 +77,26 @@ void	create_threads(t_philo *philo, t_philo_rule *rule)
 	}
 }
 
-int	ft_errors(t_philo **philo, t_philo_rule **rules, char **av)
+int	ft_errors(t_philo **philo, t_philo_rule **ru, char **av)
 {
 	int i;
 
 	i = 0;
-	(*rules) = pars_args(av[2], av[3], av[4], av[5]);
-	if (rules == NULL)
+	(*ru) = pars_args(av[2], av[3], av[4], av[5]);
+	if (ru == NULL)
 		return (1);
-	(*rules)->n = ft_atoi(av[1]);
-	(*rules)->fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * (*rules)->n);
-	if ((*rules)->fork == NULL)
+	(*ru)->n = ft_atoi(av[1]);
+	(*ru)->fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * (*ru)->n);
+	if ((*ru)->fork == NULL)
 		return (1);
-	while (i < (*rules)->n)
+	while (i < (*ru)->n)
 	{
-		if (pthread_mutex_init(&(*rules)->fork[i], NULL))
+		if (pthread_mutex_init(&(*ru)->fork[i], NULL))
 			return (1);
 		i++;
 	}
-	(*rules)->meals_count = ft_atoi(av[1]);
-	(*philo) = philo_init(av[1], *rules);
+	(*ru)->meals_count = ft_atoi(av[1]);
+	(*philo) = philo_init(av[1], *ru);
 	if (philo == NULL)
 		return (1);
 	return (0);
@@ -129,9 +119,10 @@ int	main(int ac, char **av)
 		printf("Memory Allocation Error or Error in creation of thread\n");
 		return (0);
 	}
-	
+	if (rules->n == 0)
+		return (0);
 	pthread_mutex_init(&philo_list->rule->print_mutex, NULL);
 	create_threads(philo_list, rules);
-	// free_mutex(philo_list, rules->n);
+	free_mutex(rules, rules->n);
 	return (0);
 }

@@ -38,3 +38,20 @@ void	print_state(t_philo *philo, char *state, int condition)
 	if (condition == 2)
 		printf("%s", state);
 }
+
+int	check_time(t_philo *philo)
+{
+	if (get_time_of_day() - philo->last_eat >= philo->rule->time_to_die)
+	{
+		philo->rule->dead_time = get_time_of_day() - philo->rule->current_time;
+		philo->rule->philo_id = philo->philo_id;
+		print_state(philo, "is died\n", 1);
+		return (1);
+	}
+	if (philo->rule->meals_count == 0)
+	{
+		print_state(philo, "All philosphers ate\n", 2);
+		return (1);
+	}
+	return (0);
+}

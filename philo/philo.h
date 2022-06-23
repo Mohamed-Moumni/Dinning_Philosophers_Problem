@@ -70,7 +70,7 @@ void			sleeping(t_philo *philo);
 void			create_threads(t_philo *philo, t_philo_rule *rule);
 int				check_time(t_philo *phil);
 int				check_must_eat(t_philo_rule *rule);
-void			free_mutex(t_philo *philo, int n);
+void			free_mutex(t_philo_rule *rules, int n);
 int				ft_errors(t_philo **philo, t_philo_rule **rules, char **av);
 void			fork_init(t_philo *philo);
 #endif

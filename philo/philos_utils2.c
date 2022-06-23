@@ -12,18 +12,18 @@
 
 #include "philo.h"
 
-// void	free_mutex(t_philo *philo, int n)
-// {
-// 	int	i;
+void	free_mutex(t_philo_rule *rules, int n)
+{
+	int	i;
 
-// 	i = 0;
-// 	while (i < n)
-// 	{
-// 		pthread_mutex_destroy(&philo[i].right_fork);
-// 		i++;
-// 	}
-// 	pthread_mutex_destroy(&philo->rule->print_mutex);
-// }
+	i = 0;
+	while (i < n)
+	{
+		pthread_mutex_destroy(&rules->fork[i]);
+		i++;
+	}
+	pthread_mutex_destroy(&rules->print_mutex);
+}
 
 void	ft_usleep(long sleep)
 {

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   philo_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 23:21:35 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/21 11:50:26 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/25 08:57:34 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 
 typedef struct s_philosophers_rules
 {
-	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	*fork;
 	long			time_to_die;
 	long			time_to_eat;
@@ -50,11 +49,12 @@ typedef struct s_philosophers
 	t_philo_rule				*rule;
 }t_philo;
 
-int	ft_strcmp(char *str1, char *str2);
-int	checkcmp(char *num, int plus, int minus);
-int	is_integer(char *num);
-int	is_number(char *num);
-int	check_number(char **num);
-int	ft_atoi(const char *str);
-
+int		ft_strcmp(char *str1, char *str2);
+int		checkcmp(char *num, int plus, int minus);
+int		is_integer(char *num);
+int		is_number(char *num);
+int		check_number(char **num);
+int		ft_atoi(const char *str);
+void	ft_usleep(long sleep);
+long	get_time_of_day(void);
 #endif

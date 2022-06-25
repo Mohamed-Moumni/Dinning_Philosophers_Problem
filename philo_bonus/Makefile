@@ -1,8 +1,8 @@
 NAME = philo_bonus
 
-SRC = main.c ft_atoi.c error.c
+SRC = ft_atoi.c philo_action.c philos_utils.c error.c main.c philos_utils2.c
 
-OBJ = main.o ft_atoi.o error.o
+OBJ = $(SRC:.c=.o)
 
 CC_FLAGS = -Wall -Wextra -Werror -pthread
 

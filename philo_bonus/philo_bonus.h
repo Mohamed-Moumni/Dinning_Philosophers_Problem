@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 23:21:35 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/25 09:32:20 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/25 09:45:07 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 
 typedef struct s_philosophers_rules
 {
-	pthread_mutex_t	*fork;
+	sem_t			*sema;
 	long			time_to_die;
 	long			time_to_eat;
 	long			time_to_sleep;
@@ -62,4 +62,7 @@ long	get_time_of_day(void);
 void	print_state(t_philo *philo, char *state);
 void	sleeping(t_philo *philo);
 void	eating(t_philo *philo);
+void	*simulation(void *data);
+void    create_process(t_philo *philo, t_philo_rule *rules);
+int		ft_strlen(char *str);
 #endif

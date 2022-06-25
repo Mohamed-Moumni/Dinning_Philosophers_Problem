@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 14:26:44 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/25 09:34:04 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/25 09:45:26 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	*simulation(void *data)
 		usleep(500);
 	while (1)
 	{
-		sem_wait("semaphore");
+		sem_wait(phil->rule->sema);
 		print_state(phil, "has taken a fork");
-		sem_wait("semaphore");
+		sem_wait(phil->rule->sema);
 		print_state(phil, "has taken a fork");
 		eating(phil);
-		sem_post("semaphore");
-		sem_post("semaphore");
+		sem_post(phil->rule->sema);
+		sem_post(phil->rule->sema);
 		sleeping(phil);
 		print_state(phil, "is thinking");
 	}

@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:16:47 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/25 08:55:45 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/25 09:28:56 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,12 @@ long	get_time_of_day(void)
 	gettimeofday(&tp, NULL);
 	time_in_ms = tp.tv_sec * 1000 + tp.tv_usec / 1000;
 	return (time_in_ms);
+}
+
+void	print_state(t_philo *philo, char *state)
+{
+	long time;
+
+	time = get_time_of_day() - philo->rule->current_time;
+	printf("%ld %ld %s\n", time, philo->philo_id, state);
 }

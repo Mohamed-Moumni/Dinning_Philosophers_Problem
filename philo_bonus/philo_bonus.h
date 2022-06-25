@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 23:21:35 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/25 08:57:34 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/25 09:32:20 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include<string.h>
 # include<pthread.h>
 # include<sys/time.h>
+# include<semaphore.h>
 
 # define MAX_INT 2147483647
 # define MIN_INT -2147483648
@@ -38,6 +39,7 @@ typedef struct s_philosophers_rules
 	int				philo_id;
 	int				n;
 	int				meals_count;
+	int				*pids;
 }t_philo_rule;
 
 typedef struct s_philosophers
@@ -57,4 +59,7 @@ int		check_number(char **num);
 int		ft_atoi(const char *str);
 void	ft_usleep(long sleep);
 long	get_time_of_day(void);
+void	print_state(t_philo *philo, char *state);
+void	sleeping(t_philo *philo);
+void	eating(t_philo *philo);
 #endif

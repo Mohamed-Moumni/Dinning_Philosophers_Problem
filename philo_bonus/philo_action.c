@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 14:26:44 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/25 11:52:13 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/25 21:49:18 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	*simulation(void *data)
 
 void	eating(t_philo *philo)
 {
+	philo->meals -= 1;
 	print_state(philo, "is eating");
 	philo->last_eat = get_time_of_day();
 	ft_usleep(philo->rule->time_to_eat);

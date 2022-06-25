@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 23:21:35 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/25 11:40:42 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/25 20:49:37 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 typedef struct s_philosophers_rules
 {
 	sem_t			*sema;
+	sem_t			*print;
 	long			time_to_die;
 	long			time_to_eat;
 	long			time_to_sleep;

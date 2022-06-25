@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 08:53:58 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/25 11:53:22 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/25 21:47:15 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,14 +99,24 @@ void    create_process(t_philo *philo, t_philo_rule *rules)
 void	waiting_pids(t_philo *philo, t_philo_rule *rules)
 {
 	int	status;
+	int	n;
 	(void)philo;
 
+	n = rules->n - 1;
 	waitpid(-1, &status, 0);
 	if (WIFEXITED(status))
 	{
 		if (WEXITSTATUS(status) == EXIT_FAILURE)
 		{
 			kill_pids(rules);
+		}
+		else
+		{
+			while (n > 0)
+			{
+				n--;
+				waitpid(-1, &status, 0);
+			}
 		}
 	}
 }
@@ -122,6 +132,7 @@ void	kill_pids(t_philo_rule *rules)
 		i++;
 	}
 }
+
 int main(int ac, char **av)
 {
     t_philo_rule    *rules;
@@ -141,6 +152,8 @@ int main(int ac, char **av)
     }
     sem_unlink("semaphore");
     rules->sema = sem_open("semaphore", O_CREAT, 0777, rules->n);
+    sem_unlink("print");
+    rules->print = sem_open("print", O_CREAT, 0777, 1);
 	if (rules->sema == NULL)
 		return (0);
     create_process(philo_list, rules);

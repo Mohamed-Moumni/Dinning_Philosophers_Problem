@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 17:15:56 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/25 08:55:49 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/25 09:58:46 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,15 @@ void	ft_usleep(long sleep)
 	usleep(sleep * 0.9);
 	while (get_time_of_day() - curtime < sleep)
 		usleep(50);
+}
+
+void	check_time(t_philo *philo)
+{
+	if (get_time_of_day() - philo->last_eat >= philo->rule->time_to_die)
+	{
+		philo->rule->dead_time = get_time_of_day() - philo->rule->current_time;
+		philo->rule->philo_id = philo->philo_id;
+		print_state(philo, "is died\n");
+		exit(EXIT_FAILURE);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 08:53:58 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/25 09:48:09 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/25 11:44:00 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,41 @@ void    create_process(t_philo *philo, t_philo_rule *rules)
 			philo[i].last_eat = get_time_of_day();
 			pthread_create(&philo[i].pth, NULL, simulation, &philo[i]);
 			pthread_detach(philo[i].pth);
+			check_time(&philo[i]);
 		}
 		else
 			rules->pids[i] = pid;
 		i++;
     }
+	waiting_pids(philo, rules);
 }
 
+void	waiting_pids(t_philo *philo, t_philo_rule *rules)
+{
+	int	status;
+	(void)philo;
+
+	waitpid(-1, &status, 0);
+	if (WIFEXITED(status))
+	{
+		if (WEXITSTATUS(status) == EXIT_FAILURE)
+		{
+			kill_pids(rules);
+		}
+	}
+}
+
+void	kill_pids(t_philo_rule *rules)
+{
+	int	i;
+
+	i = 0;
+	while (i < rules->n)
+	{
+		kill(rules->pids[i], SIGKILL);
+		i++;
+	}
+}
 int main(int ac, char **av)
 {
     t_philo_rule    *rules;
@@ -108,7 +136,7 @@ int main(int ac, char **av)
         return (0);
     }
     sem_unlink("semaphore");
-    rules->sema = sem_open("semaphore", O_CREAT | O_EXCL, 0777, rules->n);
+    rules->sema = sem_open("semaphore", (O_CREAT | O_EXCL), 0777, rules->n);
 	if (rules->sema == NULL)
 		return (0);
     create_process(philo_list, rules);

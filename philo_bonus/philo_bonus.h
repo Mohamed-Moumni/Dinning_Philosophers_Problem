@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 23:21:35 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/25 09:45:07 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/25 11:40:42 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include<pthread.h>
 # include<sys/time.h>
 # include<semaphore.h>
+# include<signal.h>
 
 # define MAX_INT 2147483647
 # define MIN_INT -2147483648
@@ -65,4 +66,7 @@ void	eating(t_philo *philo);
 void	*simulation(void *data);
 void    create_process(t_philo *philo, t_philo_rule *rules);
 int		ft_strlen(char *str);
+void	check_time(t_philo *philo);
+void	waiting_pids(t_philo *philo, t_philo_rule *rules);
+void	kill_pids(t_philo_rule *rules);
 #endif

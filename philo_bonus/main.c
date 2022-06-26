@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 08:53:58 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/25 21:47:15 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/26 20:24:10 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ t_philo	*philo_init(char *nb_fphilo, t_philo_rule *rules)
 	{
 		philo_list[i].philo_id = i + 1;
 		philo_list[i].rule = rules;
-		philo_list->meals = rules->nb_of_each_philo_must_eat;
+		philo_list[i].meals_check = 0;
+		philo_list[i].meals = rules->nb_of_each_philo_must_eat;
 	}
 	return (philo_list);
 }
@@ -60,7 +61,6 @@ int	ft_errors(t_philo **philo, t_philo_rule **ru, char **av)
 	if (ru == NULL)
 		return (1);
 	(*ru)->n = ft_atoi(av[1]);
-	(*ru)->meals_count = ft_atoi(av[1]);
 	(*philo) = philo_init(av[1], *ru);
 	if (philo == NULL)
 		return (1);
@@ -93,44 +93,7 @@ void    create_process(t_philo *philo, t_philo_rule *rules)
 			rules->pids[i] = pid;
 		i++;
     }
-	waiting_pids(philo, rules);
-}
-
-void	waiting_pids(t_philo *philo, t_philo_rule *rules)
-{
-	int	status;
-	int	n;
-	(void)philo;
-
-	n = rules->n - 1;
-	waitpid(-1, &status, 0);
-	if (WIFEXITED(status))
-	{
-		if (WEXITSTATUS(status) == EXIT_FAILURE)
-		{
-			kill_pids(rules);
-		}
-		else
-		{
-			while (n > 0)
-			{
-				n--;
-				waitpid(-1, &status, 0);
-			}
-		}
-	}
-}
-
-void	kill_pids(t_philo_rule *rules)
-{
-	int	i;
-
-	i = 0;
-	while (i < rules->n)
-	{
-		kill(rules->pids[i], SIGKILL);
-		i++;
-	}
+	waiting_pids(rules);
 }
 
 int main(int ac, char **av)

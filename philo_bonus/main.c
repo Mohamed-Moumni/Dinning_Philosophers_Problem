@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 08:53:58 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/26 20:24:10 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/27 16:18:49 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ t_philo	*philo_init(char *nb_fphilo, t_philo_rule *rules)
 	{
 		philo_list[i].philo_id = i + 1;
 		philo_list[i].rule = rules;
-		philo_list[i].meals_check = 0;
 		philo_list[i].meals = rules->nb_of_each_philo_must_eat;
 	}
 	return (philo_list);
@@ -54,7 +53,7 @@ t_philo	*philo_init(char *nb_fphilo, t_philo_rule *rules)
 
 int	ft_errors(t_philo **philo, t_philo_rule **ru, char **av)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	(*ru) = pars_args(av[2], av[3], av[4], av[5]);
@@ -67,16 +66,16 @@ int	ft_errors(t_philo **philo, t_philo_rule **ru, char **av)
 	return (0);
 }
 
-void    create_process(t_philo *philo, t_philo_rule *rules)
+void	create_process(t_philo *philo, t_philo_rule *rules)
 {
 	int	i;
 	int	pid;
 
 	i = 0;
-	rules->pids = (int *)malloc(sizeof(int) * rules->n);	
-    rules->current_time = get_time_of_day();
+	rules->pids = (int *)malloc(sizeof(int) * rules->n);
+	rules->current_time = get_time_of_day();
 	while (i < philo->rule->n)
-    {
+	{
 		pid = fork();
 		if (pid == 0)
 		{
@@ -92,33 +91,33 @@ void    create_process(t_philo *philo, t_philo_rule *rules)
 		else
 			rules->pids[i] = pid;
 		i++;
-    }
+	}
 	waiting_pids(rules);
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-    t_philo_rule    *rules;
-    t_philo         *philo_list;
+	t_philo_rule	*rules;
+	t_philo			*philo_list;
 
-    rules = NULL;
-    philo_list = NULL;
-    if (ac < 5 || ac > 6 || check_number(&av[1]))
-    {
-        write(1, "Error!\n", 7);
-        return (0);
-    }
-    if (ft_errors(&philo_list, &rules, av) != 0)
-    {
-        printf("Memory Allocation Error or Error in creation of thread\n");
-        return (0);
-    }
-    sem_unlink("semaphore");
-    rules->sema = sem_open("semaphore", O_CREAT, 0777, rules->n);
-    sem_unlink("print");
-    rules->print = sem_open("print", O_CREAT, 0777, 1);
+	rules = NULL;
+	philo_list = NULL;
+	if (ac < 5 || ac > 6 || check_number(&av[1]))
+	{
+		write(1, "Error!\n", 7);
+		return (0);
+	}
+	if (ft_errors(&philo_list, &rules, av) != 0)
+	{
+		printf("Memory Allocation Error or Error in creation of thread\n");
+		return (0);
+	}
+	sem_unlink("semaphore");
+	rules->sema = sem_open("semaphore", O_CREAT, 0777, rules->n);
+	sem_unlink("print");
+	rules->print = sem_open("print", O_CREAT, 0777, 1);
 	if (rules->sema == NULL)
 		return (0);
-    create_process(philo_list, rules);
+	create_process(philo_list, rules);
 	return (0);
 }

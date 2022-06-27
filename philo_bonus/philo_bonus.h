@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 23:21:35 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/26 20:27:39 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/27 16:12:39 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ typedef struct s_philosophers
 {
 	pthread_t					pth;
 	int							philo_id;
-	int							meals_check;
 	long						last_eat;
 	int							meals;
 	t_philo_rule				*rule;
@@ -65,12 +64,10 @@ void	print_state(t_philo *philo, char *state);
 void	sleeping(t_philo *philo);
 void	eating(t_philo *philo);
 void	*simulation(void *data);
-void    create_process(t_philo *philo, t_philo_rule *rules);
+void	create_process(t_philo *philo, t_philo_rule *rules);
 int		ft_strlen(char *str);
 void	check_time(t_philo *philo);
 void	waiting_pids(t_philo_rule *rules);
 void	kill_pids(t_philo_rule *rules);
-void	print_sucess(t_philo_rule *rules, char *state);
 void	*check_death(void *data);
-void	wait_sucess(t_philo_rule *rules);
 #endif

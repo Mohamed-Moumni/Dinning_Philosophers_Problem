@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 14:26:44 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/26 20:18:51 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/27 16:08:35 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*simulation(void *data)
 {
-	t_philo *phil;
+	t_philo	*phil;
 
 	phil = (t_philo *)data;
 	if (phil->philo_id & 1)
@@ -38,7 +38,9 @@ void	eating(t_philo *philo)
 {
 	if (philo->meals == 0)
 	{
-		philo->meals_check = 1;
+		sem_post(philo->rule->sema);
+		sem_post(philo->rule->sema);
+		exit (EXIT_SUCCESS);
 	}
 	philo->meals -= 1;
 	print_state(philo, "is eating");
@@ -48,6 +50,6 @@ void	eating(t_philo *philo)
 
 void	sleeping(t_philo *philo)
 {
-	print_state(philo, "is sleeping");
-	ft_usleep(philo->rule->time_to_sleep);
+	print_state (philo, "is sleeping");
+	ft_usleep (philo->rule->time_to_sleep);
 }

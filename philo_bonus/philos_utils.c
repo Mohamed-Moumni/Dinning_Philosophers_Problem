@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:16:47 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/26 14:01:59 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/27 16:11:27 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,11 @@ long	get_time_of_day(void)
 
 void	print_state(t_philo *philo, char *state)
 {
-	long time;
+	long	time;
 
 	sem_wait(philo->rule->print);
 	time = get_time_of_day() - philo->rule->current_time;
 	printf("%ld %d %s\n", time, philo->philo_id, state);
 	if (ft_strcmp(state, "is died"))
 		sem_post(philo->rule->print);
-}
-
-void	print_sucess(t_philo_rule *rules, char *state)
-{
-	sem_wait(rules->print);
-	printf("%s", state);
 }

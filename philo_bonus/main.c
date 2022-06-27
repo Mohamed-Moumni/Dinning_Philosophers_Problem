@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 08:53:58 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/27 16:18:49 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/27 17:18:31 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,21 @@ void	create_process(t_philo *philo, t_philo_rule *rules)
 	}
 	waiting_pids(rules);
 }
+void	free_memory(t_philo *philo, t_philo_rule *rules)
+{
+	int	i;
+	int	n;
 
+	free(rules->pids);
+	n = philo->rule->n;
+	i = 0;
+	while (i < n)
+	{
+		free(philo[i].rule);
+		i++;
+	}
+	free(philo);
+}
 int	main(int ac, char **av)
 {
 	t_philo_rule	*rules;
@@ -119,5 +133,6 @@ int	main(int ac, char **av)
 	if (rules->sema == NULL)
 		return (0);
 	create_process(philo_list, rules);
+	free_memory(philo_list, rules);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:16:47 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/21 11:57:21 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/27 19:15:00 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,11 @@ int	check_time(t_philo *philo)
 		return (1);
 	}
 	return (0);
+}
+
+void	free_memory(t_philo *philo, t_philo_rule *rules)
+{
+	free (rules->fork);
+	free (rules);
+	free (philo);
 }

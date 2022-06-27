@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 14:26:44 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/22 13:52:17 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/26 13:42:52 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	eating(t_philo *philo)
 	if (philo->meals == 0)
 		philo->rule->meals_count -= 1;
 	philo->meals -= 1;
-	print_state(philo, "is eating", 0);
 	philo->last_eat = get_time_of_day();
+	print_state(philo, "is eating", 0);
 	ft_usleep(philo->rule->time_to_eat);
 }
 

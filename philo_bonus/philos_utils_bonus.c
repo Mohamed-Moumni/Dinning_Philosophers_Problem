@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:16:47 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/27 16:11:27 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/27 19:02:24 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,11 @@ void	print_state(t_philo *philo, char *state)
 	printf("%ld %d %s\n", time, philo->philo_id, state);
 	if (ft_strcmp(state, "is died"))
 		sem_post(philo->rule->print);
+}
+
+void	free_memory(t_philo *philo, t_philo_rule *rules)
+{
+	free(rules->pids);
+	free(rules);
+	free(philo);
 }

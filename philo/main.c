@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 12:34:45 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/22 13:52:06 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/27 19:17:17 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,16 +79,19 @@ void	create_threads(t_philo *philo, t_philo_rule *rule)
 
 int	ft_errors(t_philo **philo, t_philo_rule **ru, char **av)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	(*ru) = pars_args(av[2], av[3], av[4], av[5]);
-	if (ru == NULL)
+	if ((*ru) == NULL)
 		return (1);
 	(*ru)->n = ft_atoi(av[1]);
 	(*ru)->fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * (*ru)->n);
 	if ((*ru)->fork == NULL)
+	{
+		free ((*ru));
 		return (1);
+	}
 	while (i < (*ru)->n)
 	{
 		if (pthread_mutex_init(&(*ru)->fork[i], NULL))
@@ -97,7 +100,7 @@ int	ft_errors(t_philo **philo, t_philo_rule **ru, char **av)
 	}
 	(*ru)->meals_count = ft_atoi(av[1]);
 	(*philo) = philo_init(av[1], *ru);
-	if (philo == NULL)
+	if ((*philo) == NULL)
 		return (1);
 	return (0);
 }
@@ -124,5 +127,6 @@ int	main(int ac, char **av)
 	pthread_mutex_init(&philo_list->rule->print_mutex, NULL);
 	create_threads(philo_list, rules);
 	free_mutex(rules, rules->n);
+	free_memory(philo_list, rules);
 	return (0);
 }

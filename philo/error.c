@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 11:48:52 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/05/14 17:25:49 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/27 17:00:50 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ int	is_number(char *num)
 	int	i;
 
 	i = 0;
-	if ((num[i] == '-' || num[i] == '+') && ft_strlen(num) > 1)
+	if (num[i] == '-')
+		return (1);
+	if ((num[i] == '+') && ft_strlen(num) > 1)
 		i++;
 	while (num[i])
 	{

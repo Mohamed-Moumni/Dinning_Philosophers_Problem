@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 23:21:35 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/27 16:12:39 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/27 19:04:03 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,5 @@ void	check_time(t_philo *philo);
 void	waiting_pids(t_philo_rule *rules);
 void	kill_pids(t_philo_rule *rules);
 void	*check_death(void *data);
+void	free_memory(t_philo *philo, t_philo_rule *rules);
 #endif

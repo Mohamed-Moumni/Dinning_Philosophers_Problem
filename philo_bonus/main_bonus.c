@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 08:53:58 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/27 17:18:31 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/27 19:13:09 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,22 @@ int	ft_errors(t_philo **philo, t_philo_rule **ru, char **av)
 
 	i = 0;
 	(*ru) = pars_args(av[2], av[3], av[4], av[5]);
-	if (ru == NULL)
+	if ((*ru) == NULL)
 		return (1);
 	(*ru)->n = ft_atoi(av[1]);
 	(*philo) = philo_init(av[1], *ru);
-	if (philo == NULL)
+	if ((*philo) == NULL)
+	{
+		free ((*ru));
+		return (1);
+	}
+	sem_unlink("semaphore");
+	(*ru)->sema = sem_open("semaphore", O_CREAT, 0777, (*ru)->n);
+	if ((*ru)->sema == NULL)
+		return (1);
+	sem_unlink("print");
+	(*ru)->print = sem_open("print", O_CREAT, 0777, 1);
+	if ((*ru)->print == NULL)
 		return (1);
 	return (0);
 }
@@ -94,21 +105,7 @@ void	create_process(t_philo *philo, t_philo_rule *rules)
 	}
 	waiting_pids(rules);
 }
-void	free_memory(t_philo *philo, t_philo_rule *rules)
-{
-	int	i;
-	int	n;
 
-	free(rules->pids);
-	n = philo->rule->n;
-	i = 0;
-	while (i < n)
-	{
-		free(philo[i].rule);
-		i++;
-	}
-	free(philo);
-}
 int	main(int ac, char **av)
 {
 	t_philo_rule	*rules;
@@ -126,11 +123,7 @@ int	main(int ac, char **av)
 		printf("Memory Allocation Error or Error in creation of thread\n");
 		return (0);
 	}
-	sem_unlink("semaphore");
-	rules->sema = sem_open("semaphore", O_CREAT, 0777, rules->n);
-	sem_unlink("print");
-	rules->print = sem_open("print", O_CREAT, 0777, 1);
-	if (rules->sema == NULL)
+	if (rules->n == 0)
 		return (0);
 	create_process(philo_list, rules);
 	free_memory(philo_list, rules);

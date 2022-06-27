@@ -6,7 +6,7 @@
 /*   By: mmoumni <mmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 23:21:35 by mmoumni           #+#    #+#             */
-/*   Updated: 2022/06/21 11:50:26 by mmoumni          ###   ########.fr       */
+/*   Updated: 2022/06/27 19:15:13 by mmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,5 @@ int				check_must_eat(t_philo_rule *rule);
 void			free_mutex(t_philo_rule *rules, int n);
 int				ft_errors(t_philo **philo, t_philo_rule **rules, char **av);
 void			fork_init(t_philo *philo);
+void			free_memory(t_philo *philo, t_philo_rule *rules);
 #endif

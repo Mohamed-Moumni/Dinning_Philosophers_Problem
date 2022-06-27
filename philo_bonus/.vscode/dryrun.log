@@ -1,0 +1,12 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/mmoumni/Desktop/Dinning_Philosophers_Problem/philo_bonus'
+cc -Wall -Wextra -Werror -pthread -c ft_atoi.c
+ 
+cc -Wall -Wextra -Werror -pthread -c philo_action.c
+cc -Wall -Wextra -Werror -pthread -c philos_utils.c
+cc -Wall -Wextra -Werror -pthread -c error.c
+cc -Wall -Wextra -Werror -pthread -c main.c
+cc -Wall -Wextra -Werror -pthread -c philos_utils2.c
+cc -Wall -Wextra -Werror -pthread ft_atoi.o philo_action.o philos_utils.o error.o main.o philos_utils2.o -o philo_bonus
+make: Leaving directory `/Users/mmoumni/Desktop/Dinning_Philosophers_Problem/philo_bonus'
+ 

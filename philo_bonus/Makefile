@@ -1,6 +1,6 @@
 NAME = philo_bonus
 
-SRC = ft_atoi.c philo_action.c philos_utils.c error.c main.c philos_utils2.c
+SRC = ft_atoi_bonus.c philo_action_bonus.c philos_utils_bonus.c error_bonus.c main_bonus.c philos_utils2_bonus.c
 
 OBJ = $(SRC:.c=.o)
 
